@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1>Membership Form</h1>
+
+        {% include 'flash.html' %} <!-- Include the flash message here -->
+
+        <form action="/membership" method="POST" class="bg-white p-4 border rounded">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" class="form-control" id="age" name="age" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phoneNo">Contact Details:</label>
+                <input type="text" class="form-control" id="phoneNo" name="phoneNo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="height">Height (cm):</label>
+                <input type="number" class="form-control" id="height" name="height" required>
+            </div>
+
+            <div class="form-group">
+                <label for="weight">Weight (kg):</label>
+                <input type="number" class="form-control" id="weight" name="weight" required>
+            </div>
+
+            <div class="form-group">
+                <label for="emergency_contact">Emergency Contact:</label>
+                <input type="text" class="form-control" id="emergency_contact" name="emergency_contact" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Permanent Address:</label>
+                <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <br>
+        <a href="/users" class="btn btn-secondary">Back to Users List</a>
+    </div>
+</body>
+</html>

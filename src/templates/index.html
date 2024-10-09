@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1>User Management</h1>
+
+        <!-- Display flash messages -->
+        {% include 'flash.html' %} <!-- Include the flash message here -->
+        <form action="/users" method="POST" class="bg-white p-4 border rounded">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <fieldset class="form-group">
+                <legend>Role:</legend>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="admin" name="role" value="Admin" required>
+                    <label class="form-check-label" for="admin">Admin</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="trainer" name="role" value="Trainer" required>
+                    <label class="form-check-label" for="trainer">Trainer</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="finance" name="role" value="Finance" required>
+                    <label class="form-check-label" for="finance">Finance</label>
+                </div>
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary">Add User</button>
+        </form>
+
+        <br>
+        <a href="/users" class="btn btn-secondary">View All Users</a>
+    </div>
+</body>
+</html>
