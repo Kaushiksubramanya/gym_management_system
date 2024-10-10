@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Members List</h1>
+        <table class="members-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Contact</th>
+                    <th>Emergency Contact</th>
+                    <th>Address</th>
+                    <th>Package Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in members %}
+                <tr>
+                    <!-- <td>
+                        {% if member.profile_picture %}
+                            <img src="{{ url_for('static', filename='uploads/' + member.profile_picture) }}" alt="Profile Picture" class="profile-pic">
+                        {% else %}
+                            No Image
+                        {% endif %}
+                    </td> -->
+                    <td>{{ member.name }}</td>
+                    <td>{{ member.email }}</td>
+                    <td>{{ member.gender }}</td>
+                    <td>{{ member.phoneNo }}</td>
+                    <td>{{ member.emergency_contact }}</td>
+                    <td>{{ member.address }}</td>
+                    <td>{{ member.membership_package }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/add_member">Add New Member</a>
+    </div>
+</body>
+</html>

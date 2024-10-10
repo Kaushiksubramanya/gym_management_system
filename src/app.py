@@ -1,16 +1,20 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-from .models import db,  Member, User
+from flask_migrate import Migrate
+from .models import db, Member, User 
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-# Configure the SQLite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///members.db'
+# Initialize the Flask application
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///gym_management.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'your_secret_key_here'
 
 # Initialize the database
-db.init_app(app)
+db.init_app(app)  # Initialize db with the app
+migrate = Migrate(app, db)
 
 # Create the database and tables
 with app.app_context():
@@ -31,19 +35,20 @@ def list_users():
 # Route to handle user registration
 @app.route('/users', methods=['POST'])
 def add_user():
-    username = request.form['username']
-    password = request.form['password']
-    role = request.form['role']
-   
- # Create a new User instance
-    new_user = User(username=username, password=password, role=role)
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        role = request.form['role']
+
+        # Create a new User instance
+        new_user = User(username=username, password=password, role=role)
 
         # Add the user to the database
-    db.session.add(new_user)
-    db.session.commit()
+        db.session.add(new_user)
+        db.session.commit()
 
-    flash('User added successfully!', 'success')
-    return redirect(url_for('list_users'))
+        flash('User added successfully!', 'success')
+        return redirect(url_for('list_users'))  # Redirect to the user list
 
     return render_template('add_user.html')
 
@@ -80,6 +85,11 @@ def update_user(username):
     flash('User updated successfully!')
     return redirect(url_for('list_users'))
 
+@app.route('/members')
+def list_members():
+    members = Member.query.all()  # Fetch all members from the database
+    return render_template('members.html', members=members)
+
 @app.route('/membership', methods=['GET', 'POST'])
 def membership():
     if request.method == 'POST':
@@ -87,33 +97,73 @@ def membership():
         name = request.form['name']
         email = request.form['email']
         age = request.form['age']
+       # gender= request.form['gender']
         phoneNo = request.form['phoneNo']
         height = request.form['height']
         weight = request.form['weight']
         emergency_contact = request.form['emergency_contact']
         address = request.form['address']
-
+        membership_package = request.form['membership_package']
+        
         # Create a new Member instance and add it to the database
         new_member = Member(
             name=name,
             email=email,
+            #gender=gender,
             age=age,
             phoneNo=phoneNo,
             height=height,
             weight=weight,
             emergency_contact=emergency_contact,
-            address=address
+            address=address,
+            membership_package=membership_package
         )
-
+        
         db.session.add(new_member)
         db.session.commit()  # Save to the database
 
-        flash('Membership details submitted successfully!')
-        return redirect('/membership')
+        flash('Member added successfully!', 'success')
+        return redirect(url_for('list_members'))  # Redirect to member list page
 
-    return render_template('membership.html')
+    return render_template('add_member.html')
 
+# Route to add a new member
+@app.route('/add_member', methods=['GET', 'POST'])
+def add_member():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        gender = request.form['gender']
+        age = request.form['age']
+        phoneNo = request.form['phoneNo']
+        height = request.form['height']
+        weight = request.form['weight']
+        emergency_contact = request.form['emergency_contact']
+        address = request.form['address']
+        membership_package = request.form['membership_package']
+
+        # Create a new Member instance
+        new_member = Member(
+            name=name,
+            email=email,
+            gender=gender,
+            age=age,
+            phoneNo=phoneNo,
+            height=height,
+            weight=weight,
+            emergency_contact=emergency_contact,
+            address=address,
+            membership_package=membership_package
+        )
+
+        db.session.add(new_member)
+        db.session.commit()
+
+        flash('Member added successfully!', 'success')
+        return redirect(url_for('list_members'))  # Redirect to the member list
+
+    return render_template('add_member.html')
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True) 

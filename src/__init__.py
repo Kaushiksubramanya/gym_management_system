@@ -1,11 +1,18 @@
 from flask import Flask
-from flask_restful import Api
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
-def create_app():
-    app = Flask(__name__)
+# Initialize the app
+app = Flask(__name__)
 
-    #app.config.from_envvar('FLASK_CONFIG')
+# Configure the SQLite database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///gym_management.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'your_secret_key_here'
 
-    api = Api(app)
+# Initialize extensions
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
-    return app
+# Import routes and models to ensure they're loaded
+from .models import db,  Member, User
