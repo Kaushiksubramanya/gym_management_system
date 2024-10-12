@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Management</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Home</title>
 </head>
-<body class="bg-light">
-    <div class="container mt-5">
-        <h1>User Management</h1>
-
-        <!-- Display flash messages -->
-        {% include 'flash.html' %} <!-- Include the flash message here -->
+<body>
+    <div class="container">
+        <h1>Welcome, {{ username }}</h1>
+        
+        <!-- Show admin-only options -->
+        {% if role == 'admin' %}
+        <ul>
+            <li><a href="{{ url_for('list_users') }}">User Management</a></li>
+            <li><a href="{{ url_for('membership') }}">Add Membership</a></li>
+        </ul>
+        {% endif %}
+        
+        <a href="{{ url_for('logout') }}">Logout</a>
         <form action="/users" method="POST" class="bg-white p-4 border rounded">
             <div class="form-group">
                 <label for="username">Username:</label>
@@ -42,8 +48,6 @@
             <button type="submit" class="btn btn-primary">Add User</button>
         </form>
 
-        <br>
-        <a href="/users" class="btn btn-secondary">View All Users</a>
     </div>
 </body>
 </html>

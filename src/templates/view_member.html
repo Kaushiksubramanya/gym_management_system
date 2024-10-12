@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}View Member{% endblock %}
+
+{% block content %}
+<h1>Member Details</h1>
+
+<table class="member-details-table">
+    <tr>
+        <th>Name:</th>
+        <td>{{ member.name }}</td>
+    </tr>
+    <tr>
+        <th>Email:</th>
+        <td>{{ member.email }}</td>
+    </tr>
+    <tr>
+        <th>Gender:</th>
+        <td>{{ member.gender }}</td>
+    </tr>
+    <tr>
+        <th>Age:</th>
+        <td>{{ member.age }}</td>
+    </tr>
+    <tr>
+        <th>Phone Number:</th>
+        <td>{{ member.phoneNo }}</td>
+    </tr>
+    <tr>
+        <th>Height:</th>
+        <td>{{ member.height }}</td>
+    </tr>
+    <tr>
+        <th>Weight:</th>
+        <td>{{ member.weight }}</td>
+    </tr>
+    <tr>
+        <th>Emergency Contact:</th>
+        <td>{{ member.emergency_contact }}</td>
+    </tr>
+    <tr>
+        <th>Address:</th>
+        <td>{{ member.address }}</td>
+    </tr>
+    <tr>
+        <th>Membership Package:</th>
+        <td>{{ member.membership_package }}</td>
+    </tr>
+</table>
+
+<a href="{{ url_for('list_members') }}" class="btn btn-primary">Back to Member List</a>
+{% endblock %}
